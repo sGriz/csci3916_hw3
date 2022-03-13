@@ -1,6 +1,6 @@
 /*
-CSC3916 HW2
-File: app.js
+CSC3916 HW3
+File: server.js
 Description: Web API scaffolding for Movie API
  */
 

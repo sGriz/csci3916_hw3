@@ -1,14 +1,14 @@
 {
-  "name": "csci3916_hw2",
+  "name": "csci3916_hw3",
   "version": "1.0.0",
   "description": "A simple REST server using Node.js for Web API CSCI 3916",
-  "main": "app.js",
+  "main": "server.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sGriz/csci3916_hw2.git"
+    "url": "git+https://github.com/sGriz/csci3916_hw3.git"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --timeout 10000 --exit"
   },
   "author": "Sam Gryzick",
   "license": "ISC",
@@ -26,7 +26,12 @@
     "passport-local": "^1.0.0"
   },
   "bugs": {
-    "url": "https://github.com/sGriz/csci3916_hw2/issues"
+    "url": "https://github.com/sGriz/csci3916_hw3/issues"
   },
-  "homepage": "https://github.com/sGriz/csci3916_hw2#readme"
+  "homepage": "https://github.com/sGriz/csci3916_hw3#readme",
+  "devDependencies": {
+    "chai": "^4.3.6",
+    "chai-http": "^4.3.0",
+    "mocha": "^9.2.2"
+  }
 }
