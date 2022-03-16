@@ -111,7 +111,7 @@ router.route('/movies/:id')
     }
     );
 
-router.route('/movies/:id')
+router.route('/movies')
     .post(function(req, res) {
         if (!req.body.title || !req.body.year || !req.body.genre || !req.body.actors) {
             res.json({success: false, msg: 'Please include a title, year, genre, and three actors (actor names and character names) to add a movie to the database.'})
