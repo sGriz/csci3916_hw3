@@ -91,7 +91,7 @@ router.route('/movies/:id')
     .get(function(req, res) {
         Movie.findOne({ title: req.params.id }, function(err, docs) {
             if (err || docs==null){
-                res.json({success: false, msg: 'Could not find a movie.', err});
+                res.json({success: false, msg: 'Could not find a movie.', docs});
             }
             else{
                 res.json({success: true, msg: 'Successfully found a movie.', docs});
