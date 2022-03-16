@@ -90,7 +90,7 @@ router.post('/signin', function (req, res) {
 router.route('/movies/:id')
     .get(function(req, res) {
         Movie.findOne({ title: req.params.id }, function(err, docs) {
-            if (err){
+            if (err || docs==null){
                 res.json({success: false, msg: 'Could not find a movie.', err});
             }
             else{
