@@ -19,16 +19,16 @@ var MovieSchema = new Schema({
     genre: { type: String, required: true },
     actors: [
         {
-            "ActorName" : { type: String, required: true },
-            "CharacterName" : { type: String, required: true }
+            ActorName : { type: String, required: true },
+            CharacterName : { type: String, required: true }
         },
         {
-            "ActorName" : { type: String, required: true },
-            "CharacterName" : { type: String, required: true }
+            ActorName : { type: String, required: true },
+            CharacterName : { type: String, required: true }
         },
         {
-            "ActorName" : { type: String, required: true },
-            "CharacterName" : { type: String, required: true }
+            ActorName : { type: String, required: true },
+            CharacterName : { type: String, required: true }
         }
     ]
 });

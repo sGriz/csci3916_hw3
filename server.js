@@ -99,30 +99,6 @@ router.route('/movies/:id')
         });
     }
     )
-    .post(function(req, res) {
-        if (!req.body.title || !req.body.year || !req.body.genre || !req.body.actors) {
-            res.json({success: false, msg: 'Please include a title, year, genre, and three actors (actor names and character names) to add a movie to the database.'})
-        } else {
-            var movie = new Movie();
-            movie.title = req.body.title;
-            movie.year = req.body.year;
-            movie.genre = req.body.genre;
-            movie.actors = req.body.actors;
-    
-            movie.save(function(err){
-                if (err) {
-                    if (err.code == 11000)
-                        return res.json({ success: false, msg: 'A movie with that title already exists.'});
-                    else
-                        return res.json(err);
-                }
-    
-            var o = getJSONObjectForMovieRequirement(req);
-            res.json({success: true, msg: 'Successfully added a movie.', o})
-            });
-        }
-    }
-    )
     .delete(authController.isAuthenticated, function(req, res) {
         Movie.deleteOne({ title: req.params.id }, function(err, docs) {
             if (err){
@@ -132,6 +108,32 @@ router.route('/movies/:id')
                 res.json({success: true, msg: 'Successfully deleted a movie.', docs});
             }
         });
+    }
+    );
+
+router.route('/movies/:id')
+    .post(function(req, res) {
+        if (!req.body.title || !req.body.year || !req.body.genre || !req.body.actors) {
+            res.json({success: false, msg: 'Please include a title, year, genre, and three actors (actor names and character names) to add a movie to the database.'})
+        } else {
+            var movie = new Movie();
+            movie.title = req.body.title;
+            movie.year = req.body.year;
+            movie.genre = req.body.genre;
+            movie.actors = req.body.actors;
+
+            movie.save(function(err){
+                if (err) {
+                    if (err.code == 11000)
+                        return res.json({ success: false, msg: 'A movie with that title already exists.'});
+                    else
+                        return res.json(err);
+                }
+
+            var o = getJSONObjectForMovieRequirement(req);
+            res.json({success: true, msg: 'Successfully added a movie.', o})
+            });
+        }
     }
     )
     .put(authJwtController.isAuthenticated, function(req, res) {
