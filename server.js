@@ -88,10 +88,10 @@ router.post('/signin', function (req, res) {
 });
 
 router.route('/movies/:id')
-    .get(function(req, res) {
-        Movie.findOne({ title: req.params.id }, function(err, docs) {
+    .get(authJwtController.isAuthenticated, function(req, res) {
+        Movie.find({ "title": /req.params.id/i }, function(err, docs) {
             if (err || docs==null){
-                res.json({success: false, msg: 'Could not find a movie.', docs});
+                res.json({success: false, msg: 'Could not find a movie.', err});
             }
             else{
                 res.json({success: true, msg: 'Successfully found a movie.', docs});
@@ -99,7 +99,7 @@ router.route('/movies/:id')
         });
     }
     )
-    .delete(authController.isAuthenticated, function(req, res) {
+    .delete(authJwtController.isAuthenticated, function(req, res) {
         Movie.deleteOne({ title: req.params.id }, function(err, docs) {
             if (err){
                 res.json({success: false, msg: 'Could not delete a movie.', err});
@@ -112,7 +112,7 @@ router.route('/movies/:id')
     );
 
 router.route('/movies')
-    .post(function(req, res) {
+    .post(authJwtController.isAuthenticated, function(req, res) {
         if (!req.body.title || !req.body.year || !req.body.genre || !req.body.actors) {
             res.json({success: false, msg: 'Please include a title, year, genre, and three actors (actor names and character names) to add a movie to the database.'})
         } else {
