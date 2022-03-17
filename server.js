@@ -89,7 +89,7 @@ router.post('/signin', function (req, res) {
 
 router.route('/movies/:id')
     .get(authJwtController.isAuthenticated, function(req, res) {
-        req.params['id'].replace("#", " ");//replace the '#' characters with spaces for the search functionality
+        req.params['id'].replace("_", " ");//replace the '#' characters with spaces for the search functionality
         Movie.find({ title: { $regex: req.params['id'], $options: "i" } }, function(err, docs) {
             if (err || docs==null){
                 res.json({success: false, msg: 'Could not find a movie.', err});
