@@ -89,7 +89,7 @@ router.post('/signin', function (req, res) {
 
 router.route('/movies/:id')
     .get(authJwtController.isAuthenticated, function(req, res) {
-        var search_title = req.params['id'].replaceAll("_", " ");//replace the '#' characters with spaces for the search functionality
+        var search_title = req.params['id'].replaceAll("_", " ");//replace the '_' characters with whitespaces for the search functionality
         Movie.find({ title: { $regex: search_title, $options: "i" } }, function(err, docs) {
             if (err || docs==null){
                 res.json({success: false, msg: 'Could not find a movie.', err});
@@ -101,12 +101,30 @@ router.route('/movies/:id')
     }
     )
     .delete(authJwtController.isAuthenticated, function(req, res) {
-        Movie.deleteOne({ title: { $regex: req.params['id'], $options: "i" } }, function(err, docs) {
+        var search_title = req.params['id'].replaceAll("_", " ");//replace the '_' characters with whitespaces for the search functionality
+        Movie.deleteOne({ title: { $regex: search_title, $options: "i" } }, function(err, docs) {
             if (err){
                 res.json({success: false, msg: 'Could not delete a movie.', err});
             }
             else{
                 res.json({success: true, msg: 'Successfully deleted a movie.', docs});
+            }
+        });
+    }
+    )
+    .put(authJwtController.isAuthenticated, function(req, res) {
+        var movie = new Movie();
+        movie.title = req.params['id'].replaceAll("_", " ");//replace the '_' characters with whitespaces for the search functionality
+        movie.year = req.body.year;
+        movie.genre = req.body.genre;
+        movie.actors = req.body.actors;
+        Movie.updateOne({ title: { $regex: movie.title } },
+            movie, function(err, docs) {
+            if (err){
+                res.json({success: false, msg: 'Could not update a movie.', err});
+            }
+            else{
+                res.json({success: true, msg: 'Successfully updated a movie.', docs});
             }
         });
     }
@@ -135,23 +153,6 @@ router.route('/movies')
             res.json({success: true, msg: 'Successfully added a movie.', o})
             });
         }
-    }
-    )
-    .put(authJwtController.isAuthenticated, function(req, res) {
-        var movie = new Movie();
-        movie.title = req.body.title;
-        movie.year = req.body.year;
-        movie.genre = req.body.genre;
-        movie.actors = req.body.actors;
-        Movie.updateOne({ title: { $regex: movie.title, $options: "i" } },
-            movie, function(err, docs) {
-            if (err){
-                res.json({success: false, msg: 'Could not update a movie.', err});
-            }
-            else{
-                res.json({success: true, msg: 'Successfully updated a movie.', docs});
-            }
-        });
     }
     );
 
