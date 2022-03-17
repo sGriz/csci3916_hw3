@@ -89,7 +89,8 @@ router.post('/signin', function (req, res) {
 
 router.route('/movies/:id')
     .get(authJwtController.isAuthenticated, function(req, res) {
-        Movie.find({ title: { $regex: req.params['id'], $options: "xi" } }, function(err, docs) {
+        req.params['id'].replace("#", " ");//replace the '#' characters with spaces for the search functionality
+        Movie.find({ title: { $regex: req.params['id'], $options: "i" } }, function(err, docs) {
             if (err || docs==null){
                 res.json({success: false, msg: 'Could not find a movie.', err});
             }
@@ -100,7 +101,7 @@ router.route('/movies/:id')
     }
     )
     .delete(authJwtController.isAuthenticated, function(req, res) {
-        Movie.deleteOne({ title: { $regex: req.params['id'], $options: "xi" } }, function(err, docs) {
+        Movie.deleteOne({ title: { $regex: req.params['id'], $options: "i" } }, function(err, docs) {
             if (err){
                 res.json({success: false, msg: 'Could not delete a movie.', err});
             }
@@ -142,7 +143,7 @@ router.route('/movies')
         movie.year = req.body.year;
         movie.genre = req.body.genre;
         movie.actors = req.body.actors;
-        Movie.updateOne({ title: { $regex: movie.title, $options: "xi" } },
+        Movie.updateOne({ title: { $regex: movie.title, $options: "i" } },
             movie, function(err, docs) {
             if (err){
                 res.json({success: false, msg: 'Could not update a movie.', err});
