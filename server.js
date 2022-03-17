@@ -115,8 +115,7 @@ router.route('/movies/:id')
     .put(authJwtController.isAuthenticated, function(req, res) {
         var movie = new Movie();
         search_title = req.params['id'].replaceAll("_", " ");//replace the '_' characters with whitespaces for the search functionality
-        Movie.updateOne({ title: { $regex: search_title } },
-            req.body, function(err, docs) {
+        Movie.updateOne({ title: search_title }, req.body, { runValidators: true }, function(err, docs) {
             if (err){
                 res.json({success: false, msg: 'Could not update a movie.', err});
             }
