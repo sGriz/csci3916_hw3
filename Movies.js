@@ -33,13 +33,5 @@ var MovieSchema = new Schema({
     ]
 });
 
-MovieSchema.methods.compareTitle = function (title, callback) {
-    var movie = this;
-
-    if (title == movie.title) {
-        callback(isMatch);
-    }
-}
-
 //return the model to server
 module.exports = mongoose.model('Movie', MovieSchema);
