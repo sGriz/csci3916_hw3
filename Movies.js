@@ -20,15 +20,18 @@ var MovieSchema = new Schema({
     actors: [
         {
             ActorName : { type: String, required: true },
-            CharacterName : { type: String, required: true }
+            CharacterName : { type: String, required: true },
+            required: true
         },
         {
             ActorName : { type: String, required: true },
-            CharacterName : { type: String, required: true }
+            CharacterName : { type: String, required: true },
+            required: true
         },
         {
             ActorName : { type: String, required: true },
-            CharacterName : { type: String, required: true }
+            CharacterName : { type: String, required: true },
+            required: true
         }
     ]
 });
